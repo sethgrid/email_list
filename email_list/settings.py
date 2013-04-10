@@ -161,7 +161,13 @@ LOGGING = {
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config(default='postgres://seth:password@localhost/seth')
+import os
+
+# if the environment variable is not set, then we are on the local dev machine
+if not os.environ.has_key('DATABASE_URL'):
+    os.environ['DATABASE_URL'] = 'postgres://seth:password@localhost/seth'
+
+DATABASES['default'] =  dj_database_url.config(default=os.environ['DATABASE_URL'])
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
