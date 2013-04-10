@@ -9,16 +9,18 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# for my first experience with django, I'm not impressed. I had to move this code to the bottom of the file to prevent it being overwritten.
+# The settings for 'default' will be overridden by heroku specific code at the bottom of the file
+# to get it to run on the local system, a user of seth:password with a database of seth is required
+# a better option would be to use environment variables. Considered a TODO 
 DATABASES = {
     'default': {
-#       'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-#       'NAME': '',                      # Or path to database file if using sqlite3.
-#       # The following settings are not used with sqlite3:
-#       'USER': '',
-#       'PASSWORD': '',
-#       'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-#       'PORT': '',                      # Set to empty string for default.
+       'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+       'NAME': '',                      # Or path to database file if using sqlite3.
+       # The following settings are not used with sqlite3:
+       'USER': '',
+       'PASSWORD': '',
+       'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+       'PORT': '',                      # Set to empty string for default.
     }
 }
 
@@ -159,20 +161,7 @@ LOGGING = {
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config(default='postgres://seth:password@localhost/seth')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'seth',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'seth',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
