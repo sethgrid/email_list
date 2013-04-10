@@ -13,15 +13,15 @@ MANAGERS = ADMINS
 # to get it to run on the local system, a user of seth:password with a database of seth is required
 # a better option would be to use environment variables. Considered a TODO 
 DATABASES = {
-#   'default': {
-#      'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-#      'NAME': '',                      # Or path to database file if using sqlite3.
-#      # The following settings are not used with sqlite3:
-#      'USER': '',
-#      'PASSWORD': '',
-#      'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-#      'PORT': '',                      # Set to empty string for default.
-#   }
+    'default': {
+       'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+       'NAME': '',                      # Or path to database file if using sqlite3.
+       # The following settings are not used with sqlite3:
+       'USER': '',
+       'PASSWORD': '',
+       'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+       'PORT': '',                      # Set to empty string for default.
+    }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -168,6 +168,7 @@ import os
 #    dev_default = 'postgres://seth:password@localhost/seth'
 
 DATABASES['default'] =  dj_database_url.config()
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 #DATABASES['default'] =  dj_database_url.config(default=dev_default)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
