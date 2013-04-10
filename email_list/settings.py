@@ -167,8 +167,8 @@ import os
 if not os.environ.has_key('DATABASE_URL'):
     dev_default = 'postgres://seth:password@localhost/seth'
 
-DATABASES['default'] =  dj_database_url.config()
-#DATABASES['default'] =  dj_database_url.config(default=dev_default)
+#DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config(default=dev_default)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
