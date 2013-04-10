@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 # The settings for 'default' will be overridden by heroku specific code at the bottom of the file
 # to get it to run on the local system, a user of seth:password with a database of seth is required
 # a better option would be to use environment variables. Considered a TODO 
-#DATABASES = {
+DATABASES = {
 #   'default': {
 #      'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
 #      'NAME': '',                      # Or path to database file if using sqlite3.
@@ -22,7 +22,7 @@ MANAGERS = ADMINS
 #      'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
 #      'PORT': '',                      # Set to empty string for default.
 #   }
-#}
+}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
