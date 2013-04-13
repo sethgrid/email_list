@@ -1,6 +1,6 @@
 # Django settings for email_list project.
 
-DEBUG = True
+DEBUG = False 
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 # The settings for 'default' will be overridden by heroku specific code at the bottom of the file
 # to get it to run on the local system, a user of seth:password with a database of seth is required
 # a better option would be to use environment variables. Considered a TODO 
-DATABASES = {} 
+DATABASES = {}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
