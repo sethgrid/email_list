@@ -50,9 +50,7 @@ class Command(BaseCommand):
             # go through each sender...
             for i in range(len(senders)):
                 # chance to attach this email with this sender
-                self.stdout.write("attempt sender %s (%s)" % (senders[i].name, i))
                 if int(random.randrange(100)) > percent_chance_to_add_to_list:
-                    self.stdout.write("Yes!")
                     sender_list = List()
                     sender_list.sender = senders[i]
                     sender_list.recipient = email
@@ -60,9 +58,7 @@ class Command(BaseCommand):
                     # chance to have this email unsubscribed from this sender
                     if int(random.randrange(100)) < percent_chance_to_unsub:
                         sender_list.unsubscribed = 1
-                        self.stdout.write("unsubed")
 
-                    self.stdout.write("save")
                     sender_list.save()
 
         self.stdout.write("Email addresses created and assigned to senders")

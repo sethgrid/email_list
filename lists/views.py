@@ -4,7 +4,19 @@ from django.utils import simplejson
 from lists.models import Sender, Email, List
 
 def index(request):
-    return HttpResponse("Hello world! You're at the Lists index.")
+    page = '''
+    <html>
+    <head><title>Lists</title></head>
+    <body>
+        Hit up the following json endpoints with sender set to 'A', 'B', 'C', 'D', or 'E':<br />
+        <ul>
+            <li>/lists/getlist/{{sender}}/</li>
+            <li>/lists/getlist/{{sender}}/subscribes</li>
+            <li>/lists/getlist/{{sender}}/unsubscribes</li>
+    </body>
+    </html>
+    '''
+    return HttpResponse(page)
 
 # TOC
 # get_list(request, sender_name)

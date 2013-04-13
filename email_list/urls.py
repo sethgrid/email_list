@@ -7,6 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     # Examples:
     url(r'^lists/', include('lists.urls')),
+    url(r'^$', include('lists.urls'))
     # url(r'^email_list/', include('email_list.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
