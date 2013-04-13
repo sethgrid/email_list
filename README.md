@@ -10,9 +10,9 @@ Currently hard coded to use postgres with user 'seth', no password, and database
 
 ### Endpoints
 Current endpoints:
-*/lists/{{sender}} - gets all emails in sender's list
-*/lists/{{sender}}/subscribes - gets all subscribed emails
-*/lists/{{sender}}/unsubscribes - gets all unsubscribed emails
+* /lists/{{sender}} - gets all emails in sender's list
+* /lists/{{sender}}/subscribes - gets all subscribed emails
+* /lists/{{sender}}/unsubscribes - gets all unsubscribed emails
 
 ### Seed data
 $ python manage.py help populate
