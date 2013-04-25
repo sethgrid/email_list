@@ -9,10 +9,15 @@ def index(request):
     <head><title>Lists</title></head>
     <body>
         Hit up the following json endpoints with sender set to 'A', 'B', 'C', 'D', or 'E':<br />
+        For adding or removing email addresses, '@example.com' is automatiacally appended. So '.../add/foo/' will insert as foo@example.com.
         <ul>
             <li>/lists/getlist/{{sender}}/</li>
             <li>/lists/getlist/{{sender}}/subscribes</li>
             <li>/lists/getlist/{{sender}}/unsubscribes</li>
+            <li>/lists/getlist/{{sender}}/add/{{email}}</li>
+            <li>/lists/getlist/{{sender}}/delete/{{email}}</li>
+            <li>/lists/getlist/{{sender}}/update_subscription/{{email}}/subscribed/{{yes|no}}</li>
+            <li>/lists/getlist/{{sender}}/update_subscription/{{email}}/subscribed/ <--- will report the subscription status for sender/email</li>
     </body>
     </html>
     '''
@@ -40,6 +45,85 @@ def get_subscribed(request, sender_name=None):
 def get_unsubscribed(request, sender_name=None):
     return get_list(request, sender_name, 1)
 
+def add_email(request, sender_name, email_address):
+    sender = _get_sender(sender_name)
+    if not sender:
+        return _send_error("No Sender Found", 404)
+
+    email = Email()
+    email.email_address = email_address + "@example.com"
+    email.save()
+
+    list = List()
+    list.sender = sender
+    list.recipient = email
+    list.save()
+
+    data = {"message": "success"}
+    return _send_response(data, 200)
+
+
+def delete_email(request, sender_name, email_address):
+    sender = _get_sender(sender_name)
+    if not sender:
+        return _send_error("No Sender Found", 404)
+
+    email = _get_email(email_address)
+    if not email:
+        return _send_error("No Email Found", 404)
+
+    email.delete()
+
+    data = {"message": "success"}
+    return _send_response(data, 200)
+
+def update_subscription(request, sender_name, email_address, yes_no):
+    sender = _get_sender(sender_name)
+    if not sender:
+        return _send_error("No Sender Found", 404)
+
+    if yes_no == "no" or yes_no == "0":
+        unsubscribed = 1
+    else:
+        unsubscribed = 0
+
+    email = _get_email(email_address)
+    if not email:
+        return _send_error("No Email Found", 404)
+
+    try:
+        list = List.objects.filter(sender=sender.id, recipient=email.id)[0]
+    except IndexError:
+        return _send_error("No list contains this sender and this email address", 404)
+
+    list.unsubscribed = unsubscribed
+    list.save()
+
+    data = {"message": "success"}
+    return _send_response(data, 200)
+
+def show_subscription(request, sender_name, email_address):
+    sender = _get_sender(sender_name)
+    if not sender:
+        return _send_error("No Sender Found", 404)
+
+    email = _get_email(email_address)
+    if not email:
+        return _send_error("No Email Found", 404)
+
+    try:
+        list = List.objects.filter(sender=sender.id, recipient=email.id)[0]
+    except IndexError:
+        return _send_error("No list contains this sender and this email address", 404)
+
+    status = list.unsubscribed
+
+    data = {"sender": sender.name,
+            "email": email.email_address,
+            "unsubscribed": status
+    }
+    return _send_response(data, 200)
+
 def _get_sender(sender_name):
     # get the first result back for the requested sender name
     try:
@@ -47,6 +131,14 @@ def _get_sender(sender_name):
     except IndexError:
         sender = None
     return sender
+
+def _get_email(email_address):
+    # get the first result back for the requested email address
+    try:
+        email = Email.objects.filter(email_address=email_address + "@example.com")[0]
+    except IndexError:
+        email = None
+    return email
 
 def _get_emails_from_sender(sender_id, unsubscribedd=0):
     emails = []
